@@ -1,0 +1,71 @@
+.loginContainer {
+  background-color: black;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginCard {
+  display: flex;
+  flex-direction: column;
+  background-color: #272727;
+  width: 500px;
+  height: 500px;
+  padding: 50px;
+  border-radius: 15px;
+}
+
+.logo {
+  align-self: center;
+  margin: 50px;
+}
+
+.inputItem {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  margin-bottom: 15px;
+}
+
+.loginInputs {
+  height: 40px;
+  border-radius: 5px;
+  background-color: #272727;
+  border-color: #6366f1;
+  border-width: 1px;
+  border-style: solid;
+  margin-top: 10px;
+  outline: none;
+  color: white;
+  font-size: 15px;
+  padding: 10px;
+}
+
+.loginButton {
+  background-color: #6366f1;
+  color: white;
+  border: 0px;
+  font-size: 17px;
+  height: 45px;
+  border-radius: 5px;
+  margin-top: auto;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .loginCard {
+    width: 300px;
+    height: 450px;
+    padding: 25px;
+    border-radius: 5px;
+  }
+
+  .logo {
+    height: 60px;
+  }
+}
+
+.errorMsg {
+  color: #ff0b37;
+}

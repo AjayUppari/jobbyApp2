@@ -1,0 +1,92 @@
+li {
+  list-style-type: none;
+}
+
+.homeAndJobs {
+  display: flex;
+}
+
+.navBarContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.homeAndJobs {
+  display: flex;
+  justify-content: center;
+}
+
+.navItemContainer {
+  margin-right: 0px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (min-width: 768px) {
+  .navbar {
+    background-color: #202020;
+    padding: 15px;
+    height: 100px;
+  }
+
+  .mobileNavbar {
+    display: none;
+  }
+
+  .logoImage {
+    height: 40px;
+  }
+}
+
+.navItemsContainer {
+  display: flex;
+}
+
+li {
+  list-style: none;
+}
+
+.navItem {
+  color: white;
+  background-color: #202020;
+  border: 0px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.logoutButton {
+  background-color: #6366f1;
+  color: white;
+  border: 0px;
+  width: 120px;
+  height: 40px;
+  font-size: 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .mobileNavbar {
+    display: flex;
+    background-color: #202020;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navbar {
+    display: none;
+  }
+
+  .mobileLogo {
+    height: 30px;
+  }
+
+  .mobileNavItem {
+    font-size: 25px;
+    margin: 8px;
+  }
+}
