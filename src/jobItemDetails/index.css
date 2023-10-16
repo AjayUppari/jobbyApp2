@@ -100,3 +100,24 @@ li {
 .description {
   color: white;
 }
+
+.locationAndType {
+  display: flex;
+}
+
+.locationAndTypeItem {
+  color: white;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.jobDetailsFailure {
+  background-color: black;
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

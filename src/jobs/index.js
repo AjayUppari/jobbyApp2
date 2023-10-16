@@ -5,8 +5,6 @@ import Loader from 'react-loader-spinner'
 
 import Navbar from '../navbar'
 import './index.css'
-
-import SalaryFilter from '../salaryFilter'
 import JobItem from '../jobItem'
 
 const employmentTypesList = [
@@ -75,8 +73,10 @@ class Jobs extends Component {
     }
     const {searchText, employmentFilterList, salaryFilter} = this.state
     const employmentFilterString = employmentFilterList.join(',')
+    console.log(employmentFilterString)
     const url = `https://apis.ccbp.in/jobs?employment_type=${employmentFilterString}&search=${searchText}&minimum_package=${salaryFilter}`
 
+    console.log(url)
     const response = await fetch(url, options)
     const jsonData = await response.json()
 
@@ -183,6 +183,7 @@ class Jobs extends Component {
       )
     } else {
       const updatedList = [...employmentFilterList, employmentId]
+      console.log(updatedList)
       this.setState(
         {
           employmentFilterList: updatedList,
@@ -211,49 +212,48 @@ class Jobs extends Component {
           <Navbar />
           <div className="jobsContainer">
             <div className="filtersContainer">
+              {profileStatus
+                ? this.renderProfileDetails()
+                : this.renderProfileFailureView()}
               <hr />
 
-              <div className="employmentFilterContainer">
-                <h1 className="filterHeading">Type of Employment</h1>
-                <ul>
-                  {employmentTypesList.map(eachItem => (
-                    <li key={eachItem.label} className="filterItem">
-                      <input
-                        onChange={this.onClickEmploymentFilter}
-                        id={eachItem.employmentTypeId}
-                        type="checkbox"
-                      />
-                      <label
-                        className="filterText"
-                        htmlFor={eachItem.employmentTypeId}
-                      >
-                        {eachItem.label}
-                      </label>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <h1 className="filterHeading">Type of Employment</h1>
+              <ul>
+                {employmentTypesList.map(eachItem => (
+                  <li key={eachItem.label} className="filterItem">
+                    <input
+                      onChange={this.onClickEmploymentFilter}
+                      id={eachItem.employmentTypeId}
+                      type="checkbox"
+                    />
+                    <label
+                      className="filterText"
+                      htmlFor={eachItem.employmentTypeId}
+                    >
+                      {eachItem.label}
+                    </label>
+                  </li>
+                ))}
+              </ul>
 
               <hr />
 
-              <div className="salaryFilterContainer">
-                <h1 className="filterHeading">Salary Range</h1>
-                <ul>
-                  {salaryRangesList.map(eachItem => (
-                    <li key={eachItem.label} className="filterItem">
-                      <input
-                        onChange={this.onChangeSalary}
-                        type="radio"
-                        name="salaryFilter"
-                        id={eachItem.salaryRangeId}
-                      />
-                      <label htmlFor={eachItem.salaryRangeId}>
-                        {eachItem.label}
-                      </label>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <h1 className="filterHeading">Salary Range</h1>
+              <ul>
+                {salaryRangesList.map(eachItem => (
+                  <li key={eachItem.label} className="filterItem">
+                    <input
+                      onChange={this.onChangeSalary}
+                      type="radio"
+                      name="salaryFilter"
+                      id={eachItem.salaryRangeId}
+                    />
+                    <label htmlFor={eachItem.salaryRangeId}>
+                      {eachItem.label}
+                    </label>
+                  </li>
+                ))}
+              </ul>
             </div>
             <div className="jobs">
               <div className="searchJobsBar">
@@ -275,72 +275,6 @@ class Jobs extends Component {
                   <JobItem key={eachJob.id} jobDetails={eachJob} />
                 ))}
               </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className="mobileContainer">
-          <div className="mobileJobsContainer">
-            <div className="filtersContainer">
-              <div className="searchJobsBar">
-                <input
-                  placeholder="search"
-                  className="searchJobs"
-                  type="search"
-                />
-                <button data-testid="searchButton" type="button">
-                  <BsSearch className="searchIcon" />
-                </button>
-              </div>
-
-              {profileStatus
-                ? this.renderMobileProfile()
-                : this.renderMobileFailureView()}
-
-              <hr />
-
-              <div className="employmentFilterContainer">
-                <h1 className="filterHeading">Type of Employment</h1>
-                <ul>
-                  {employmentTypesList.map(eachItem => (
-                    <li className="filterItem">
-                      <input
-                        onChange={this.toggleEmploymentFilter}
-                        id={eachItem.employmentTypeId}
-                        type="checkbox"
-                      />
-                      <label
-                        className="filterText"
-                        htmlFor={eachItem.employmentTypeId}
-                      >
-                        {eachItem.label}
-                      </label>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <hr />
-
-              <div className="salaryFilterContainer">
-                <h1 className="filterHeading">Salary Range</h1>
-                <ul>
-                  {salaryRangesList.map(eachItem => (
-                    <SalaryFilter
-                      key={eachItem.salaryRangeId}
-                      filterItem={eachItem}
-                      onClickSalaryRange={this.onChangeSalaryFilter}
-                    />
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <div className="jobs">
-              <div className="jobsItemsContainer">
-                {jobsList.map(eachJob => (
-                  <JobItem key={eachJob.id} jobDetails={eachJob} />
-                ))}
-              </div>
             </div>
           </div>
         </div>

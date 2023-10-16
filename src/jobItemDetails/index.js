@@ -4,6 +4,7 @@ import {AiFillStar} from 'react-icons/ai'
 import {IoLocationSharp} from 'react-icons/io5'
 import {BsFillBriefcaseFill} from 'react-icons/bs'
 import {FaExternalLinkAlt} from 'react-icons/fa'
+import {ImLocation} from 'react-icons/im'
 import Loader from 'react-loader-spinner'
 import Navbar from '../navbar'
 import './index.css'
@@ -38,6 +39,7 @@ class JobItemDetails extends Component {
     }
 
     const response = await fetch(url, options)
+    console.log(response)
 
     if (response.ok) {
       const jsonData = await response.json()
@@ -79,12 +81,34 @@ class JobItemDetails extends Component {
         skills: updatedJobDetails.skills,
         fetchStatus: 'SUCCESS',
       })
+    } else {
+      this.setState({
+        fetchStatus: 'FAILURE',
+      })
     }
   }
 
   renderLoader = () => (
     <div className="loader-container" data-testid="loader">
       <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+    </div>
+  )
+
+  renderJobDetailsFailureView = () => (
+    <div className="jobDetailsFailure">
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
+        alt="failure view"
+      />
+      <h1>Oops! Something Went Wrong</h1>
+      <p>We cannot seem to find the page you are looking for</p>
+      <button
+        onClick={this.getJobDetails}
+        className="retryButton"
+        type="button"
+      >
+        Retry
+      </button>
     </div>
   )
 
@@ -103,7 +127,6 @@ class JobItemDetails extends Component {
       jobDescription,
     } = jobDetails
 
-    console.log(lifeAtCompany)
     const {description, imageUrl} = lifeAtCompany
     return (
       <>
@@ -116,7 +139,7 @@ class JobItemDetails extends Component {
                 <img
                   className="companyLogoDetails"
                   src={companyLogoUrl}
-                  alt="companyLogo"
+                  alt="job details company logo"
                 />
               </div>
               <div className="ratingAndTitleContainer">
@@ -157,25 +180,24 @@ class JobItemDetails extends Component {
                 <p className="descriptionText">{jobDescription}</p>
               </div>
             </div>
-            <div className="skillsSection">
-              <h1 className="subHeading">Skills</h1>
-              <ul>
-                <div className="skillsContainer">
-                  {skills.map(eachSkill => (
-                    <li key={eachSkill.name}>
-                      <div className="skillContainer">
-                        <img
-                          src={eachSkill.imageUrl}
-                          alt={eachSkill.name}
-                          className="skillImage"
-                        />
-                        <p>{eachSkill.name}</p>
-                      </div>
-                    </li>
-                  ))}
-                </div>
-              </ul>
-            </div>
+            <h1 className="subHeading">Skills</h1>
+            <ul>
+              <div className="skillsContainer">
+                {console.log(skills)}
+                {skills.map(eachSkill => (
+                  <li key={eachSkill.name}>
+                    <div className="skillContainer">
+                      <img
+                        src={eachSkill.imageUrl}
+                        alt={eachSkill.name}
+                        className="skillImage"
+                      />
+                      <p>{eachSkill.name}</p>
+                    </div>
+                  </li>
+                ))}
+              </div>
+            </ul>
 
             <div className="lifeAtCompanySection">
               <h1 className="subHeading">Life at Company</h1>
@@ -185,33 +207,41 @@ class JobItemDetails extends Component {
               </div>
             </div>
           </div>
-          <div className="similarJobsSection">
-            <h1 className="subHeading">Similar Jobs</h1>
-            <div className="similarJobsContainer">
-              {similarJobs.map(eachItem => (
-                <div className="similarJob">
-                  <div className="similarJobItem">
-                    <div className="sectionItem">
-                      <img
-                        className="companyLogoDetails"
-                        src={eachItem.companyLogoUrl}
-                        alt="companyLogo"
-                      />
-                    </div>
-                    <div className="ratingAndTitleContainer">
-                      <p className="jobTitle">{eachItem.title}</p>
-                      <div className="ratingContainer">
-                        <AiFillStar className="star" />
-                        <p className="rating">{eachItem.rating}</p>
-                      </div>
+          <h1 className="subHeading">Similar Jobs</h1>
+          <ul className="similarJobsContainer">
+            {similarJobs.map(eachItem => (
+              <li className="similarJob">
+                <div className="similarJobItem">
+                  <div className="sectionItem">
+                    <img
+                      className="companyLogoDetails"
+                      src={eachItem.companyLogoUrl}
+                      alt="similar job company logo"
+                    />
+                  </div>
+                  <div className="ratingAndTitleContainer">
+                    <h1 className="jobTitle">{eachItem.title}</h1>
+                    <div className="ratingContainer">
+                      <AiFillStar className="star" />
+                      <p className="rating">{eachItem.rating}</p>
                     </div>
                   </div>
-                  <h1 className="descriptionHeading">Description</h1>
-                  <p className="description">{eachItem.jobDescription}</p>
                 </div>
-              ))}
-            </div>
-          </div>
+                <h1 className="descriptionHeading">Description</h1>
+                <p className="description">{eachItem.jobDescription}</p>
+                <div className="locationAndType">
+                  <div className="locationAndTypeItem">
+                    <ImLocation />
+                    <p>{eachItem.location}</p>
+                  </div>
+                  <div className="locationAndTypeItem">
+                    <BsFillBriefcaseFill />
+                    <p>{eachItem.employmentType}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </>
     )
@@ -225,6 +255,8 @@ class JobItemDetails extends Component {
         return this.renderLoader()
       case 'SUCCESS':
         return this.renderSuccessView()
+      case 'FAILURE':
+        return this.renderJobDetailsFailureView()
       default:
         return null
     }

@@ -1,8 +1,5 @@
 import Cookies from 'js-cookie'
 import {withRouter, Link} from 'react-router-dom'
-import {AiFillHome} from 'react-icons/ai'
-import {BsBriefcaseFill} from 'react-icons/bs'
-import {FiLogOut} from 'react-icons/fi'
 import './index.css'
 
 const Navbar = props => {
@@ -13,24 +10,6 @@ const Navbar = props => {
   }
   return (
     <>
-      <nav className="mobileNavbar">
-        <div className="logoContainer">
-          <img
-            className="mobileLogo"
-            src="https://assets.ccbp.in/frontend/react-js/logo-img.png"
-            alt="website logo"
-          />
-        </div>
-        <div className="navItemsContainer">
-          <AiFillHome className="mobileNavItem" />
-          <BsBriefcaseFill className="mobileNavItem" />
-          <FiLogOut
-            onClick={onLogout}
-            type="button"
-            className="mobileNavItem"
-          />
-        </div>
-      </nav>
       <nav className="navbar">
         <ul className="navBarContainer">
           <li className="logoContainer">
